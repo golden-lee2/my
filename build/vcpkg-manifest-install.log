@@ -1,0 +1,42 @@
+Fetching registry information from https://github.com/microsoft/vcpkg (HEAD)...
+Detecting compiler hash for triplet x64-windows...
+Compiler found: E:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.40.33807/bin/Hostx64/x64/cl.exe
+The following packages will be built and installed:
+  * asio:x64-windows@1.30.2 -- C:\Users\Administrator\AppData\Local\vcpkg\registries\git-trees\17ce1a2d17d0cb0d50eb72c89a9e51f472ef31f4
+    crow:x64-windows@1.2.0 -- C:\Users\Administrator\AppData\Local\vcpkg\registries\git-trees\a44a1c72d91d4799b509c35eaa5ee74aea4617fa
+    fmt:x64-windows@10.2.1#2 -- C:\Users\Administrator\AppData\Local\vcpkg\registries\git-trees\f6f4efa01a5e9ac627f0c6687af8b6b317fbbe42
+  * vcpkg-cmake:x64-windows@2024-04-23 -- C:\Users\Administrator\AppData\Local\vcpkg\registries\git-trees\e74aa1e8f93278a8e71372f1fa08c3df420eb840
+  * vcpkg-cmake-config:x64-windows@2024-05-23 -- C:\Users\Administrator\AppData\Local\vcpkg\registries\git-trees\97a63e4bc1a17422ffe4eff71da53b4b561a7841
+Additional packages (*) will be modified to complete this operation.
+Restored 5 package(s) from C:\Users\Administrator\AppData\Local\vcpkg\archives in 589 ms. Use --debug to see more details.
+Installing 1/5 vcpkg-cmake-config:x64-windows@2024-05-23...
+Elapsed time to handle vcpkg-cmake-config:x64-windows: 7.26 ms
+vcpkg-cmake-config:x64-windows package ABI: 4c1bd29e821ee1547814c35d877745c2aede71e5e1555ad80d2b9ec48dec4a44
+Installing 2/5 vcpkg-cmake:x64-windows@2024-04-23...
+Elapsed time to handle vcpkg-cmake:x64-windows: 6.33 ms
+vcpkg-cmake:x64-windows package ABI: 3bb144d814fd79b92343061524fb1c183986184078953d470965e48e9b6aa881
+Installing 3/5 asio:x64-windows@1.30.2...
+Elapsed time to handle asio:x64-windows: 238 ms
+asio:x64-windows package ABI: f07e83c4a60740322ecb8d04ebd1f37c53a4ffca88aec6d53f261b528979ae0e
+Installing 4/5 crow:x64-windows@1.2.0...
+Elapsed time to handle crow:x64-windows: 19.1 ms
+crow:x64-windows package ABI: 75455ae424f01ed4c0c2d01f6ef31e9c038e65fa494179867ac3f739acd79444
+Installing 5/5 fmt:x64-windows@10.2.1#2...
+Elapsed time to handle fmt:x64-windows: 19.5 ms
+fmt:x64-windows package ABI: f4cdc3dadcd6686dc28c08c18e53228023aafdb0130f9a184624b6775b5d81c8
+Total install time: 290 ms
+crow provides CMake targets:
+
+  # this is heuristically generated, and may not be correct
+  find_package(Crow CONFIG REQUIRED)
+  target_link_libraries(main PRIVATE Crow::Crow asio::asio)
+
+The package fmt provides CMake targets:
+
+    find_package(fmt CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE fmt::fmt)
+
+    # Or use the header-only version
+    find_package(fmt CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE fmt::fmt-header-only)
+

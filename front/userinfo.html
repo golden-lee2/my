@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Information</title>
+    <style>
+        .wallet-info {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 10px; /* 调整钱包信息和按钮之间的间距 */
+        }
+
+        .wallet-info p {
+            margin-right: 10px; /* 调整钱包信息和按钮之间的间距 */
+        }
+
+        .btn {
+            padding: 5px 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-right: 800px; /* 调整按钮之间的间距 */
+        }
+    </style>
+</head>
+<body>
+    <h1>User Information</h1>
+    <div id="user-info">
+        <p><strong>Username:</strong> {{ username }}</p>
+    </div>
+    <form action="/userinfo" method="POST">
+        <label for="school">School:</label>
+        <input type="text" id="school" name="school" value="{{ school }}" required>
+        <br>
+        <label for="contact">Contact:</label>
+        <input type="text" id="contact" name="contact" value="{{ contact }}" required>
+        <br>
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" value="{{ address }}" required>
+        <br>
+        <div class="wallet-info">
+            <p><strong>Wallet:</strong> {{ wallet }}</p>
+            <button onclick="openrechargePage('{{ uid }}');">recharge</button>
+            
+        </div>
+        <button type="submit">Update Information</button>
+        <br>
+        <a href="/welcome">Return to Homepage</a>
+    </form>
+    <script>
+        function openrechargePage(uid) {
+            var url = '/recharge?uid=' + uid;
+            window.open(url, '_blank', 'width=400,height=300'); // 打开支付页面，设置窗口大小
+        }
+    </script>
+</body>
+</html>

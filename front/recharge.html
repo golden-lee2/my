@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recharge Wallet</title>
+    <style>
+        .input-group {
+            margin-bottom: 10px;
+        }
+        .btn {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function confirmRecharge(amount) {
+            fetch('/confirm_recharge', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ amount: amount })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("Payment confirmed!");
+                    window.close(); // Close the payment page
+                } else {
+                    alert("Payment failed.");
+                    window.close();
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Recharge Wallet</h1>
+    <form id="recharge-form" action="/confirm_recharge" method="POST">
+        <div class="input-group">
+            <label for="amount">Enter Amount:</label>
+            <input type="text" id="amount" name="amount" required>
+        </div>
+        <button class="btn" type="button" onclick="confirmRecharge(document.getElementById('amount').value)">Confirm Recharge</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            display: flex;
+        }
+        .sidebar {
+            width: 200px;
+            margin-right: 20px;
+            border-right: 1px solid rgb(11, 10, 10); /* 添加竖线样式 */
+            padding-right: 20px; /* 可选：增加右侧内边距使内容不紧贴竖线 */
+        }
+        .content {
+            flex: 1;
+        }
+        .button-container {
+            text-align: left;
+        }
+        .button-container button {
+            display: block;
+            margin-bottom: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button-container button:hover {
+            background-color: #ddd;
+        }
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .product {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            width: 200px;
+            text-align: center;
+        }
+        .product img {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+        .product button {
+            margin-top: 10px;
+            background-color: #007bff;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .product button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h1>Menu</h1>
+        <div class="button-container">
+            <button onclick="window.location.href='/userinfo'">User Information</button>
+            <button onclick="window.location.href='/post_product'">Post Product</button>
+            <button onclick="openRechargePage('{{ uid }}');">Recharge</button>
+            <button onclick="window.location.href='/my_products'">My Products</button> 
+            <button onclick="window.location.href='/my_orders'">My Orders</button>
+        </div>
+    </div>
+    <div class="content">
+        <h2>Products</h2>
+        <div class="products" id="products"></div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/products')
+                .then(response => response.json())
+                .then(data => {
+                    const productsContainer = document.getElementById('products');
+                    data.products.forEach(product => {
+                        const productElement = document.createElement('div');
+                        productElement.className = 'product';
+                        productElement.innerHTML = `
+                            <img src="${product.picture}" alt="${product.productName}">
+                            <h3>${product.productName}</h3>
+                            <p>Price: $${product.price}</p>
+                            <button onclick="viewProductDetails(${product.product_id})">View Details</button>
+                        `;
+                        productsContainer.appendChild(productElement);
+                    });
+                });
+        });
+
+        function viewProductDetails(productId) {
+            window.location.href = `/product_details?pid=${productId}`;
+        }
+
+        function openRechargePage(uid) {
+            var url = '/recharge?uid=' + uid;
+            window.open(url, '_blank', 'width=400,height=300'); // 打开支付页面，设置窗口大小
+        }
+    </script>
+</body>
+</html>

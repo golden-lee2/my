@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+</head>
+<body>
+    <h2>Payment for Product</h2>
+    <p><strong>Product Name:</strong> {{ productName }}</p>
+    <p><strong>Price:</strong> ${{ price }}</p>
+    <button onclick="confirmPayment('{{ pid }}', '{{ uid }}', '{{ price }}');">Confirm Payment</button>
+
+    <script>
+        function confirmPayment(pid, uid, price) {
+            fetch('/confirm_payment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ pid: pid, uid: uid, price: price })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("Payment confirmed!");
+                    window.close(); // Close the payment page
+                } else {
+                    alert("Payment failed.");
+                    window.close();
+                }
+            });
+        }
+    </script>
+</body>
+</html>

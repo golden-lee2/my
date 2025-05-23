@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <style>
+        img#productImage {
+            max-width: 100%;
+            height: auto;
+            width: 300px; /* Set image width */
+            height: 300px; /* Set image height */
+        }
+    </style>
+    <script>
+        function openPaymentPage(pid) {
+            var url = '/payment?pid=' + pid;
+            window.open(url, '_blank', 'width=400,height=300'); // 打开支付页面，设置窗口大小
+        }
+    </script>
+</head>
+<body>
+    <h2>Product Details</h2>    
+    <p><strong>Product Name:</strong> {{ productName }}</p>
+    <img id="productImage" src={{ picture }} alt="{{ productName }}">
+    <p><strong>Description:</strong> {{ description }}</p>
+    <p><strong>Price:</strong> ${{ price }}</p>
+    <p><strong>seller:</strong> {{ sellername }}</p>
+    <p><strong>seller contact:</strong> {{ seller_contact }}</p>
+    <button onclick="openPaymentPage('{{ pid }}');">Pay</button>
+    <button onclick="window.location.href='/welcome';">Return to Homepage</button>
+</body>
+</html>

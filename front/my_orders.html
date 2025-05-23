@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .orders {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .order {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            width: 200px;
+            text-align: center;
+        }
+        .confirm-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .confirm-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>My Orders</h1>
+    <div class="orders" id="orders"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/my_orders_show')
+                .then(response => response.json())
+                .then(data => {
+                    const ordersContainer = document.getElementById('orders');
+                    data.orders.forEach(order => {
+                        const orderElement = document.createElement('div');
+                        orderElement.className = 'order';
+                        orderElement.innerHTML = `
+                            <p>Order Number: ${order.orderNumber}</p>
+                            <p>Buyer: ${order.Buyer}</p>
+                            <p>Buyer address: ${order.Buyer_address}</p>
+                            <p>Buyer contact: ${order.Buyer_contact}</p>
+                            <p>Seller: ${order.Seller}</p>
+                            <p>Seller address: ${order.Seller_address}</p>
+                            <p>Seller contact: ${order.Seller_contact}</p>
+                            <p>Product: ${order.Product}</p>
+                            <p>Status: ${order.Status}</p>
+                            <button class="confirm-button" onclick="confirmReceived(${order.orderNumber}, this)">Confirm Received</button>
+                        `;
+                        ordersContainer.appendChild(orderElement);
+                    });
+                });
+        });
+
+        function confirmReceived(orderNumber, button) {
+            fetch(`/confirm_received`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ orderNumber })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('确认收到成功');
+                    button.disabled = true; // 禁用按钮
+                    button.textContent = '已确认'; // 更新按钮文本
+                } else {
+                    alert('确认收到失败');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('确认收到失败');
+            });
+        }
+    </script>
+</body>
+</html>
